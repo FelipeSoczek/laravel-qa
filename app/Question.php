@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,9 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    /* $question = Question::find(1);
-    $question->user->name -- Aqui eu consigo fazer esse tipo de consulta */
+    public function setTitleAttribute($value){
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
 }
