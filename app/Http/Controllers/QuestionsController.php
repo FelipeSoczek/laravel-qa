@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\AskQuestionRequest; //importado
 
 class QuestionsController extends Controller
 {
@@ -39,9 +40,13 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AskQuestionRequest $request) //aqui vou mudar com o mesmo nome do askQuestion onde tem as regras
     {
-        //
+        $request->user()->questions()->create($request->only('title', 'body'));
+
+       // return redirect('/questions');
+
+       return redirect()->route('questions.index')->with('success', "Your question has been submitted");
     }
 
     /**
